@@ -43,20 +43,35 @@ def initchase (creatures):
         # determine mp for each creature
         creature.mp = creature.mov_adjusted - lowest_mov + 1
 
+    lowest_mp_badguys = min(c.mp for c in creatures if c.ispursuer)
+    lowest_mp_goodguys = min(c.mp for c in creatures if not c.ispursuer)
+
     empty_position = 0
+    last_mp = lowest_mp_badguys
     for badguy in sorted(creatures, key=attrgetter('mp', 'con')): 
         if not badguy.ispursuer:
             continue
+        badguy.hi()
+
+        if badguy.mp > last_mp:
+            empty_position += 1
+            last_mp = badguy.mp
+
         badguy.position = empty_position
-        empty_position += 1
-        #badguy.hi()
+        badguy.hi()
 
     empty_position += headstart
+    last_mp = lowest_mp_goodguys
     for goodguy in sorted(creatures, key=attrgetter('mp', 'con')): 
         if goodguy.ispursuer:
             continue
+
+        if goodguy.mp > last_mp:
+            empty_position += 1
+            last_mp = goodguy.mp
+
         goodguy.position = empty_position
-        empty_position += 1
+
 
 def ischaseactive(creatures):
     isactive = False
