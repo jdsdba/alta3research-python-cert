@@ -4,12 +4,14 @@ from operator import attrgetter
 import crayons
 
 
+# for adjustments to movement passed on a con check
 mov_adjust_vals = {
     'Success-Crit': 1,
     'Success-Reg' : 0,
     'Fail'        : -1
 }
 
+# displays for map
 map_symbols = {
     'empty' : ' =',
     'pit'   : 'o=',
@@ -22,6 +24,7 @@ def rolldie(die):
     return(random.randint(1, die))
 
 
+# take a skill rating, rolls 1-100 randomly, and returns Success/Fail if roll <= skill, crit if 1/5 of skill
 def skillcheck(skillrating):
     skillroll = (rolldie(100))
     if (skillroll <= skillrating/5): 
@@ -32,6 +35,7 @@ def skillcheck(skillrating):
         return('Fail')
 
 
+# set pursuers one beginning of map, in ascending mp order, then the headstart area is empty, then place pursues
 def initchase (creatures, headstart):
     creatures.sort(key=attrgetter('dex', 'con'), reverse = True)
 
@@ -73,6 +77,7 @@ def initchase (creatures, headstart):
 
 
 def ischaseactive(creatures):
+    # returns True if there is still someone left to chase, False otherwise
     isactive = False
     for creature in creatures:
         if creature.status == 'running' and not creature.ispursuer:
@@ -145,7 +150,7 @@ def runchase(creatures, mapitems):
             while (current_mp > 0 and creature.status == 'running'):
 
                 if creature.ispursuer:
-                    remaining_pursue = 0
+                    #remaining_pursue = 0
 
                     for caughtcreature in sorted(creatures, key=attrgetter('luck')):
                         if creature == caughtcreature:
@@ -162,13 +167,14 @@ def runchase(creatures, mapitems):
                             roundsummary.append([f'{creature.symbol} - {creature.name} catches {caughtcreature.name}', 'red'])
                             break
                         
-                        remaining_pursue += 1
+                        #remaining_pursue += 1
 
-                    if creature.status == 'running' and remaining_pursue == 0:
+                    if creature.status == 'running' and not ischaseactive(creatures): #remaining_pursue == 0:
                         roundsummary.append([f'{creature.symbol} - {creature.name} gives up the chase', 'yellow'])
                         creature.status = 'Gives up'
 
 
+                # could be capturing or gives up by now, so no move
                 if creature.status != 'running':
                     continue
 
@@ -179,6 +185,7 @@ def runchase(creatures, mapitems):
                     creature.position += 1
                     roundsummary.append([f'{creature.symbol} - {creature.name} advances in {nextlocation.name}', 'blue'])
 
+                # skill checks to pass obstacles
                 elif nextlocation.skill == 'climb':
                     current_mp -= 1
 
@@ -224,19 +231,19 @@ class Creature:
     def __init__(self, name, mov, con, dex, luck, jump, climb, ispursuer, symbol):
         self.name = name
         # game stats common to monsters and characters 
-        self.mov = mov      # movement rate
-        self.con = con      # constitution 
-        self.dex = dex
+        self.mov = mov              # movement rate
+        self.con = con              # constitution 
+        self.dex = dex              # dexterity
         self.luck = luck
         self.jump = jump
         self.climb = climb
-        self.ispursuer = ispursuer
-        self.mov = mov      # movement rate
-        self.symbol = symbol
-        self.status = 'running'
-        self.position = -1
-        self.mp = -1
-        self.mov_adjusted = -1
+        self.ispursuer = ispursuer  # True if chasing, False if chased
+        self.mov = mov              # movement rate
+        self.symbol = symbol        # symbol for map
+        self.status = 'running' 
+        self.position = -1          # position on map, based on mp
+        self.mp = -1                # how many actions per round, based on mov_adjusted compared to other values in chase
+        self.mov_adjusted = -1      # mov either decreased or increased based on con check
 
     def calc_mov_adjusted(self):
         self.mov_adjusted = self.mov + (mov_adjust_vals[skillcheck(self.con)])

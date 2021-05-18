@@ -6,6 +6,7 @@ def createdata():
     headstart = 3
 
 
+    # add stats for both pursuers and pursues
     creatures = []
 
     creatures.append(cobj.Creature(name = 'Scooby',        mov = 9, con = 50, dex = 75, luck = 90, jump = 60, climb = 20, ispursuer = False, symbol = 's'))
@@ -21,6 +22,7 @@ def createdata():
     creatures.append(cobj.Creature(name = 'Dark Young',    mov = 8, con = 80, dex = 85, luck = 30, jump = 40, climb = 40, ispursuer = True,  symbol = 'Y'))
     
 
+    # defines the one dimensional chase map
     mapitems = []
 
     mapitems.append(cobj.MapContents(name = 'Grassland', contenttype = 'empty', skill = 'none'))
@@ -50,4 +52,4 @@ def createdata():
     mapitems.append(cobj.MapContents(name = 'Jungle',    contenttype = 'empty', skill = 'none'))
     mapitems.append(cobj.MapContents(name = 'Jungle',    contenttype = 'pit',   skill = 'jump'))
 
-    return(creatures, mapitems, headstart)
+    return(creatures, mapitems, headstart)           # returns data to main

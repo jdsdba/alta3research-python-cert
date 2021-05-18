@@ -3,13 +3,13 @@ import CallCthulhuChaseObjects as cobj
 
 def createdata():
 
-    headstart = 2
+    headstart = 3
 
 
     creatures = []
 
     creatures.append(cobj.Creature(name = 'Scooby',        mov = 9, con = 50, dex = 75, luck = 90, jump = 60, climb = 20, ispursuer = False, symbol = 's'))
-    creatures.append(cobj.Creature(name = 'Shaggy',        mov = 8, con = 40, dex = 65, luck = 80, jump = 40, climb = 30, ispursuer = False, symbol = 's'))
+    creatures.append(cobj.Creature(name = 'Shaggy',        mov = 8, con = 40, dex = 65, luck = 80, jump = 40, climb = 30, ispursuer = False, symbol = 'h'))
     creatures.append(cobj.Creature(name = 'Velma',         mov = 7, con = 40, dex = 45, luck = 70, jump = 30, climb = 35, ispursuer = False, symbol = 'v'))
     creatures.append(cobj.Creature(name = 'Daphne',        mov = 8, con = 70, dex = 75, luck = 60, jump = 65, climb = 75, ispursuer = False, symbol = 'd'))
     creatures.append(cobj.Creature(name = 'Fred',          mov = 8, con = 90, dex = 65, luck = 60, jump = 60, climb = 65, ispursuer = False, symbol = 'f'))
@@ -23,6 +23,10 @@ def createdata():
 
     mapitems = []
 
+    mapitems.append(cobj.MapContents(name = 'Grassland', contenttype = 'empty', skill = 'none'))
+    mapitems.append(cobj.MapContents(name = 'Grassland', contenttype = 'empty', skill = 'none'))
+    mapitems.append(cobj.MapContents(name = 'Grassland', contenttype = 'empty', skill = 'none'))
+    mapitems.append(cobj.MapContents(name = 'Grassland', contenttype = 'empty', skill = 'none'))
     mapitems.append(cobj.MapContents(name = 'Grassland', contenttype = 'empty', skill = 'none'))
     mapitems.append(cobj.MapContents(name = 'Grassland', contenttype = 'empty', skill = 'none'))
     mapitems.append(cobj.MapContents(name = 'Grassland', contenttype = 'empty', skill = 'none'))

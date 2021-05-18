@@ -5,6 +5,7 @@ import CallCthulhuChaseData as ccd
 
 def main():
 
+    # read setup data from CallCthulhuChaseData.py
     (creatures, mapitems, headstart) = ccd.createdata()
 
     cco.initchase(creatures, headstart)
