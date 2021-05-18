@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# this file contains data for the simulated chase. update by changing the creatures and maptitems lists. Also, can updated headstart variable to increase the distance between 
+# the chasers and the chased creatures. Most stats are 1-100 other than mov, which is usually less than 12
+
 import CallCthulhuChaseObjects as cobj
 
 def createdata():

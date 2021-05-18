@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+
+# this file contains objects and functions used by main
+
 import random
 from operator import attrgetter 
 import crayons

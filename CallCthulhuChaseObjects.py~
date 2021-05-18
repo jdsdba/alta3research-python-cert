@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+
+# this file contains objects and functions used by main
+
 import random
 from operator import attrgetter 
 import crayons
@@ -114,7 +117,7 @@ def printmap(mapitems):
 def printintro(creatures, mapitems, roundcount):
     print ('\nStarting stats...\n')
 
-    for creature in sorted(creatures, key=attrgetter('dex'), reverse=True):
+    for creature in creatures:
         creature.hi()
 
     print('\n')
@@ -150,7 +153,6 @@ def runchase(creatures, mapitems):
             while (current_mp > 0 and creature.status == 'running'):
 
                 if creature.ispursuer:
-                    #remaining_pursue = 0
 
                     for caughtcreature in sorted(creatures, key=attrgetter('luck')):
                         if creature == caughtcreature:
@@ -166,10 +168,8 @@ def runchase(creatures, mapitems):
                             caughtcount += 1
                             roundsummary.append([f'{creature.symbol} - {creature.name} catches {caughtcreature.name}', 'red'])
                             break
-                        
-                        #remaining_pursue += 1
-
-                    if creature.status == 'running' and not ischaseactive(creatures): #remaining_pursue == 0:
+                    
+                    if creature.status == 'running' and not ischaseactive(creatures):
                         roundsummary.append([f'{creature.symbol} - {creature.name} gives up the chase', 'yellow'])
                         creature.status = 'Gives up'
 
@@ -223,9 +223,9 @@ def runchase(creatures, mapitems):
         displayroundsummary(roundsummary)
 
     print('*' * 50, 'Summary', '*' * 50)
-    print(f'\n\nEscaped: {escapedcount}, Caught: {caughtcount}')
-
-
+    print(f'\n\nEscaped: {escapedcount}, Caught: {caughtcount}\n\n')
+    for creature in creatures:
+        creature.hi()
 class Creature:
 
     def __init__(self, name, mov, con, dex, luck, jump, climb, ispursuer, symbol):

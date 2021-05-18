@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# main, run this script to start the chase
+
 import CallCthulhuChaseObjects as cco
 import CallCthulhuChaseData as ccd
 
